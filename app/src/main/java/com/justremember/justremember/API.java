@@ -6,9 +6,11 @@ import com.justremember.justremember.Entities.User;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -19,4 +21,6 @@ public interface API {
     Call<User> getUser(@Path("id") long id);
     @GET("users/{id}/notes")
     Call<List<Note>> getNotesByUserId(@Path("id") long id);
+    @POST("users/{id}/notes/")
+    Call<Void> postNote(@Path("id") long id, @Body Note note);
 }

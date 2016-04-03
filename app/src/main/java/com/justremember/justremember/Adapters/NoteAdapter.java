@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.justremember.justremember.API;
+import com.justremember.justremember.ApiProvider;
 import com.justremember.justremember.Entities.Note;
 import com.justremember.justremember.R;
 
@@ -29,12 +30,10 @@ public class NoteAdapter extends BaseAdapter {
     List<Note> notes;
     Context context;
     ProgressBar progressBar;
-    API api;
-    public NoteAdapter(List<Note> notes, ProgressBar progressBar, Context context, API api) {
+    public NoteAdapter(List<Note> notes, ProgressBar progressBar, Context context) {
         this.notes = notes;
         this.progressBar = progressBar;
         this.context = context;
-        this.api = api;
     }
 
     @Override
@@ -66,7 +65,8 @@ public class NoteAdapter extends BaseAdapter {
         return convertView;
     }
     public void fetchNotes(long userId) {
-        Call<List<Note>> call = api.getNotesByUserId(userId);
+        notes.clear();
+        Call<List<Note>> call = ApiProvider.getInstance().getApi().getNotesByUserId(userId);
         call.enqueue(new Callback<List<Note>>() {
             @Override
             public void onResponse(Call<List<Note>> call, Response<List<Note>> response) {

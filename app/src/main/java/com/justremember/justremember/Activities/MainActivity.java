@@ -1,5 +1,6 @@
 package com.justremember.justremember.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -35,11 +36,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    API api;
-    Retrofit retrofit;
-    ListView listView;
-    NoteAdapter noteAdapter;
-    ProgressBar progressBar;
+    private ListView listView;
+    private NoteAdapter noteAdapter;
+    private ProgressBar progressBar;
+    private static final int NEW_NOTE = 805;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,27 +59,26 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.3.2:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        api = retrofit.create(API.class);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         listView = (ListView) findViewById(R.id.list);
-        noteAdapter = new NoteAdapter(new ArrayList<Note>(), progressBar, this, api);
+        noteAdapter = new NoteAdapter(new ArrayList<Note>(), progressBar, this);
         listView.setAdapter(noteAdapter);
         listView.setDividerHeight(0);
-        noteAdapter.fetchNotes(1);
+        //noteAdapter.fetchNotes(1);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                noteAdapter.fetchNotes(1);
+                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                startActivityForResult(intent, NEW_NOTE);
             }
         });
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        //progressBar.setVisibility(View.VISIBLE);
+        noteAdapter.fetchNotes(1);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
