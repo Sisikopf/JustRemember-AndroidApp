@@ -41,17 +41,26 @@
                     android:id="@+id/dateTextView"
                     android:layout_marginLeft="16dp"
                     android:layout_weight="5"
-                    android:text="time"/>
-
+                    android:text="time"
+                    android:visibility="invisible"/>
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ПОДРОБНЕЕ"
+                    android:text="Изменить"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:id="@+id/editButton"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Удалить"
                     android:textColor="@color/colorAccent"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:id="@+id/maximizeButton"
+                    android:id="@+id/deleteButton"
                     />
+
             </LinearLayout>
 
         </LinearLayout>
